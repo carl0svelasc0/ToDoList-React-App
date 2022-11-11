@@ -4,6 +4,7 @@ import { ToDoSearch } from '../ToDoSearch';
 import { ToDoList } from '../ToDoList';
 import { ToDoItem } from '../ToDoItem';
 import { CreateToDoButton } from '../CreateToDoButton';
+import { AppUI } from "./appUI";
 // import './App.css';
 
 const defaultToDos = [
@@ -15,8 +16,8 @@ const defaultToDos = [
 
 
 function App() {
-  const [toDos,setToDos] = useState(defaultToDos);
-  const [searchValue,setSearchValue] = useState('');
+  const [toDos, setToDos] = useState(defaultToDos);
+  const [searchValue, setSearchValue] = useState('');
 
   const completedToDos = toDos.filter(toDo => !!toDo.completed).length;
   const totalToDos = toDos.length;
@@ -26,7 +27,7 @@ function App() {
   if (!searchValue.length >= 1) {
     searchedToDos = toDos;
   } else {
-    searchedToDos = toDos.filter(toDo => { 
+    searchedToDos = toDos.filter(toDo => {
       const toDoText = toDo.text.toLowerCase();
       const searchText = searchValue.toLowerCase();
       return toDoText.includes(searchText);
@@ -43,34 +44,20 @@ function App() {
   const deleteToDo = (text) => {
     const toDoIndex = toDos.findIndex(toDo => toDo.text === text);
     const newListToDos = [...toDos];
-    newListToDos.splice(toDoIndex,1);
+    newListToDos.splice(toDoIndex, 1);
     setToDos(newListToDos);
   };
 
   return (
-    <>
-      <ToDoCounter
-      total={totalToDos}
-      completed={completedToDos}
-      />
-      <ToDoSearch 
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-      />
-      
-      <ToDoList>
-        {searchedToDos.map(toDo => (
-          <ToDoItem
-            key={toDo.text} 
-            text = {toDo.text}
-            completed = {toDo.completed}
-            onComplete ={() => completeToDo(toDo.text)}
-            onDelete ={() => deleteToDo(toDo.text)}
-            />
-        ))}
-      </ToDoList>
-      <CreateToDoButton />
-    </>
+    <AppUI
+    totalToDos={totalToDos}
+    completedToDos={completedToDos}
+    searchValue={searchValue}
+    setSearchValue={setSearchValue}
+    searchedToDos={searchedToDos}
+    completeToDo={completeToDo}
+    deleteToDo={deleteToDo}
+    />
   );
 }
 
