@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import './ToDoSearch.css'
 
-function ToDoSearch(){
-    const [searchValue,setSearchValue] = useState('');
-
+function ToDoSearch({ searchValue, setSearchValue }){
     const onSearchValueChange = (event) => {
         console.log(event.target.value);
         setSearchValue(event.target.value);
@@ -14,8 +12,7 @@ function ToDoSearch(){
             placeholder="Cebolla"
             value={searchValue}
             onChange={onSearchValueChange}
-        />,
-        <p>{searchValue}</p>
+        />
     ];
 }
 
