@@ -1,32 +1,29 @@
-import React, { useState } from "react";
+import { ToDoContext } from "../ToDoContext";
 import { ToDoCounter } from '../ToDoCounter';
 import { ToDoSearch } from '../ToDoSearch';
 import { ToDoList } from '../ToDoList';
 import { ToDoItem } from '../ToDoItem';
 import { CreateToDoButton } from '../CreateToDoButton';
+import React from "react";
 
 
 
-function AppUI({
-    totalToDos,
-    completedToDos,
-    searchValue,
-    setSearchValue,
-    searchedToDos,
-    completeToDo,
-    deleteToDo,
-}) {
+function AppUI() {
+    const { error,
+        loading,
+        searchedToDos,
+        completeToDo,
+        deleteToDo
+    } = React.useContext(ToDoContext);
+
     return (<>
-        <ToDoCounter
-            total={totalToDos}
-            completed={completedToDos}
-        />
-        <ToDoSearch
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-        />
-
+        <ToDoCounter />
+        <ToDoSearch />
         <ToDoList>
+            {error && <p>hubo un error!</p>}
+            {loading && <p>Cargando...</p>}
+            {(!loading && !searchedToDos.length) && <p>Crea tu primera tarea</p>}
+
             {searchedToDos.map(toDo => (
                 <ToDoItem
                     key={toDo.text}
@@ -37,6 +34,9 @@ function AppUI({
                 />
             ))}
         </ToDoList>
+
+
+
         <CreateToDoButton />
     </>
     );
