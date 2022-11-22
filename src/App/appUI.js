@@ -1,11 +1,12 @@
+import React from "react";
 import { ToDoContext } from "../ToDoContext";
 import { ToDoCounter } from '../ToDoCounter';
 import { ToDoSearch } from '../ToDoSearch';
 import { ToDoList } from '../ToDoList';
 import { ToDoItem } from '../ToDoItem';
 import { CreateToDoButton } from '../CreateToDoButton';
-import React from "react";
-
+import { Modal } from '../Modal';
+import { ToDoForm } from '../ToDoForm';
 
 
 function AppUI() {
@@ -13,7 +14,9 @@ function AppUI() {
         loading,
         searchedToDos,
         completeToDo,
-        deleteToDo
+        deleteToDo,
+        openModal,
+        setOpenModal
     } = React.useContext(ToDoContext);
 
     return (<>
@@ -35,9 +38,16 @@ function AppUI() {
             ))}
         </ToDoList>
 
+        {!!openModal && (
+            <Modal Modal >
+                <ToDoForm/>
+            </Modal>
+        )}
 
 
-        <CreateToDoButton />
+        <CreateToDoButton 
+        setOpenModal={setOpenModal}
+        />
     </>
     );
 }
